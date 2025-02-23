@@ -34,7 +34,7 @@ export default (socket) => {
         JWT.verify(token, process.env.JWT_SECRET,async (err, decoded) => {
             if(err) return socket.emit("socket/error", err);
 
-            await MessagesBot.findOneAndUpdate({ user: decoded.id }, { $push: { messages: { text: msg, sender: "bot", date: Date.now() } } }, { new: true, upsert: true });
+            await MessagesBot.findOneAndUpdate({ user: decoded.id }, { $push: { messages: { text: msg, sender: "user", date: Date.now() } } }, { new: true, upsert: true });
         });
     });
 
