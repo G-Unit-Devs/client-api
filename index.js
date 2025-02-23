@@ -4,11 +4,20 @@ import { io, server } from "./utils/server.js";
 
 try {
     User.watch().on('change', (payload) => {
-        console.log(payload.operationType);
+        switch (payload.operationType) {
+            case "update":
+                User.findById(payload.documentKey._id)
+                    .then((user) => {
+                        console.log(user);
+                        io.of("/chat").emit("user/update", user);
+                    });
+                break;
+            default:
+                break;
+        }
     });
     Messages.watch().on('change', console.log);
     MessagesBot.watch().on('change', (payload) => {
-        console.log(payload.operationType);
         switch (payload.operationType) {
             case "update":
                 MessagesBot.findById(payload.documentKey._id)

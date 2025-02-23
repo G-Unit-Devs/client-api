@@ -6,7 +6,9 @@ const schema = new mongoose.Schema({
     firstname: String,
     lastname: String,
     password: String,
-    firstLogin: { type: Boolean, default: true }
+    firstLogin: { type: Boolean, default: true },
+    role: { type: Number, enum: [0, 1, 2], default: 2 },
+    language: { type: String, default: "fr" },
 }, {
     timestamps: true,
     collection: 'mementor.users'
